@@ -53,7 +53,7 @@ class cardData(object):
     def toCSV(self):
         """" create list of strings to represent card in csv file """ 
         print(self.List) 
-        return [self.name,self.List,self.due.date(),self.member,self.labels,self.desc,self.url]
+        return [self.due.date(),self.labels,self.name,self.List,self.desc,self.member,self.url]
 
 def mergeList(a,b):
     merged = list() 
@@ -111,6 +111,6 @@ if __name__== '__main__':
     print(things)
     with open('output.csv','w') as f:
         writer = csv.writer(f)
-        writer.writerow(['Card Name','List','Due Date','Asigned to','label','Description','url'])
+        writer.writerow(['Due Date ','Assigned To','Task','List','Description','Trello Assignment','url'])
         for e in things:
             writer.writerow(e.toCSV())
