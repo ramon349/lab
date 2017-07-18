@@ -3,9 +3,11 @@ import datetime
 import csv 
 import sys
 import os 
+
+# class definition for object representing a  trello card 
 class cardData(object):
     def __init__(self,jsob,List,idtoName):
-        """ Class containing msot relevant information from a trello card
+        """ Class containing most relevant information from a trello card
         Attributes: 
             List (str): Specifies the list the card belongs to. 
             name (str): Card Title 
@@ -23,12 +25,11 @@ class cardData(object):
         self.completion = jsob['dueComplete']
         self.desc  = jsob['desc']
         self.url = jsob['shortUrl']
-        self.labels= ""
-        self.member = "" 
+        self.labels= ", "
+        self.member = ", " 
 
-        if jsob['idMembers']: #accounts for the lack of assigned people to cards 
-            for p in jsob['idMembers']:
-                self.member=self.member + ", "  +  idtoName[p]
+        if jsob['idMembers']: #accounts for the lack of assigned people to cards :
+            self.member = self.member.join(list(map(lambda x: idtoName[x],jsob['idMembers']) ) )
         else: 
             self.member = "N/A"
 
@@ -36,10 +37,8 @@ class cardData(object):
             self.due= datetime.datetime.strptime(jsob['due'],'%Y-%m-%dT%H:%M:%S.%fZ')
         else:
             self.due = datetime.datetime(2021,7,1)# if due date exist i set july 1,2021 as the "due" date 
-
         if jsob['labels']:
-            for l in jsob['labels']:
-                self.labels = self.labels + ", " +  l['name']
+            self.labels = self.labels.join( list(map(lambda x: x['name'],jsob['labels'])) )
         else: 
             self.labels = "N/A" 
 
@@ -63,21 +62,10 @@ class cardData(object):
     def __ge__(self,other):
         return self.due >= otehr.due 
 
+    #simple function to  represent object as a single row of a csv 
     def toCSV(self):
         """" create list of strings to represent card in csv file """ 
         return [self.due.date(),self.labels,self.name,self.List,self.desc,self.member,self.url]
-
-def mergeList(a,b):
-    merged = list() 
-    for e in a: 
-        merged.append(e)
-    for e in b: 
-        merged.append(e)
-    if merged:
-        return merged 
-    else:
-        merged.append('N/A')
-        return merged 
 
 def mapIDmembertoName(parsed_data):
     """ creates dictionary mapping user id to their actual name """
@@ -87,7 +75,7 @@ def mapIDmembertoName(parsed_data):
     return idtoName 
 
 def mapListIdtoName(parsed_data):
-    """ Creates dictionary mappin list id to it's name """ 
+    """ Creates dictionary mapping list id to it's name """ 
     idtoName= dict() 
     for e in parsed_data['lists']:
         idtoName[e['id']]=e['name']
@@ -119,7 +107,7 @@ if __name__== '__main__':
     #open and load data 
     data= open(sys.argv[1])
     parsed_data = json.load(data) 
-    # create ditionaries to map from trello id to board and from trello id to member 
+    # create dictionaries  to map from trello id to board and from trello id to member 
     idToName = mapListIdtoName(parsed_data)
     memberMap = mapIDmembertoName(parsed_data) 
     # extract each idividual boards cards seperately then stack them together 

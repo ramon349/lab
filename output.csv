@@ -1,4 +1,8 @@
-Card Name,Due Date,Description
-ABC,2017-07-25,
-easy as,2017-07-26,
-123,2017-07-27,
+Due Date ,Assigned To,Task,List,Description,Trello Assignment,url
+2017-07-18,"Luis,test",Mitochondria,research,,"Ramon Correa,Elizabeth F",https://trello.com/c/UtiwC3RF
+2017-07-19,",BELT",of the cell,research,,N/A,https://trello.com/c/0vpKaTVa
+2017-07-20,N/A,is the Powerhouse,research,,N/A,https://trello.com/c/D7zjmeGj
+2017-07-25,N/A,ABC,music,,Ramon Correa,https://trello.com/c/rBd2Pm5u
+2017-07-26,N/A,easy as,music,,N/A,https://trello.com/c/9On48uNT
+2017-07-27,BELT,123,music,,N/A,https://trello.com/c/jCNUZPUn
+2021-07-01,N/A,trololol,research,,N/A,https://trello.com/c/NANGKCVq
