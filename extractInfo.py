@@ -42,8 +42,8 @@ def flatCardStack(cardStack):
             data.append(e)
     return sorted(filter(lambda x: not( x.completion)  , data)) 
  
-def main(s): 
-    print('Attempting to open:  %s ' %s)
+def main(s,num): 
+    print('Attempting to open:  %s ' %(s))
     #open and load data 
     data= open(s)
     parsed_data = json.load(data) 
@@ -53,9 +53,30 @@ def main(s):
     # extract each idividual boards cards seperately then stack them together 
     things = flatCardStack(consumeList(parsed_data,idToName,memberMap))
     # writting each cards infomation one row at a time 
-    with open('output.csv','w') as f:
+    with open(num,'w') as f:
         writer = csv.writer(f)
         writer.writerow(['Due Date ','Assigned To','Task','List','Description','Trello Assignment','url'])
         for e in things:
             writer.writerow(e.toCSV())
-    print('Task is complete output.csv should be found in the path: %s ' %os.getcwd()  )
+    return 'Task is complete output.csv should be found in the path: %s ' %os.getcwd() 
+'''
+if __name__ == '__main__':
+	s = 'trell.json'
+	print('Attempting to open:  %s ' %s)
+	#open and load data
+	data= open(s)
+	parsed_data = json.load(data) 
+    # create dictionaries  to map from trello id to board and from trello id to member
+	idToName = mapListIdtoName(parsed_data)
+	memberMap = mapIDmembertoName(parsed_data) 
+    # extract each idividual boards cards seperately then stack them together
+	things = flatCardStack(consumeList(parsed_data,idToName,memberMap))
+    # writting each cards infomation one row at a time
+	with open('output.csv','w') as f:
+		writer = csv.writer(f)
+		writer.writerow(['Due Date ','Assigned To','Task','List','Description','Trello Assignment','url'])
+		for e in things:
+			writer.writerow(e.toCSV())
+	print('Task is complete output.csv should be found in the path: %s ' %os.getcwd()  )
+''' 
+
