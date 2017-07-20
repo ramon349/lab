@@ -20,23 +20,39 @@ class cardData(object):
         self.desc = jsob['desc']
         self.url = jsob['shortUrl']
         self.labels = ", "
-        self.member = ", " 
-
+        self.members = ", " 
+        Members = list() 
         if jsob['idMembers']:  #accounts for the lack of assigned people to cards :
-            self.member = self.member.join(list(map(lambda x: idtoName[x],jsob['idMembers'])))
+            Members = list(map(lambda x: idtoName[x],jsob['idMembers'])) 
+            self.lead= Members.pop(0)
+            Members = ",".join(Members) 
         else: 
-            self.member = "N/A"
+            self.lead = "N/A"
+            self.members = "N/A" 
         if jsob['due']: 
             self.due= datetime.datetime.strptime(jsob['due'],'%Y-%m-%dT%H:%M:%S.%fZ')
         else:
-            self.due = datetime.datetime(2021,7,1)# if due date exist i set july 1,2021 as the "due" date 
+            self.due = datetime.datetime(3100,7,1)# if due date exist i set july 1,2021 as the "due" date 
+        
         if jsob['labels']:
             self.labels = self.labels.join( list(filter(lambda x: x , list(map(lambda x:  x['name'],jsob['labels'])) ) ) ) 
+            print(self.labels) 
+            if Members: 
+                self.labels= self.labels +  Members 
         else: 
-            self.labels = "N/A"
+            if Members: 
+                self.labels = self.labels + Members 
+            else:
+                self.labels = "N/A"
+
     def toCSV(self):
-        """" create list of strings to represent card in csv file """ 
-        return [self.due.date(),self.labels,self.name,self.List,self.desc,self.member,self.url]
+        """" create list of strings to represent card in csv file """
+        if self.due.year == 3100:
+            s = "N/A" 
+        else: 
+            s= self.due.date() 
+
+        return [self.name,self.List,self.lead,s,self.labels,self.desc,self.url]
    #string representation of the object  
     def __str__(self):
         return self.name
