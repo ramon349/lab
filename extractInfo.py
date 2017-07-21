@@ -78,7 +78,7 @@ def main(s,num):
     things = flatCardStack(consumeList(parsed_data,idToName,memberMap))
     # writting each cards infomation one row at a time 
     with open(num,'w') as f:
-        print(num) 
+        print(num)
         writer = csv.writer(f)
         writer.writerow(["Task ","Area","Lead","Due Date","Members","Description","link"])
         for e in things: 

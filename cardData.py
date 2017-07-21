@@ -38,7 +38,7 @@ class cardData(object):
             self.labels = self.labels.join( list(filter(lambda x: x , list(map(lambda x:  x['name'],jsob['labels'])) ) ) ) 
             print(self.labels) 
             if Members: 
-                self.labels= self.labels +  Members 
+                self.labels= self.labels + ',' +   Members 
         else: 
             if Members: 
                 self.labels = self.labels + Members 

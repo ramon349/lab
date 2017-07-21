@@ -11,7 +11,7 @@ from extractInfo import main
 def analyzeData():
     """ callback fcn: ask user for file, call parse funciton , save output  """
     filename = fd.askopenfilename()
-    newFile = fd.asksaveasfilename()
+    newFile = fd.asksaveasfilename(defaultextension='.csv')
     main(filename,newFile)
     print("DONE") 
 root = tk.Tk()
