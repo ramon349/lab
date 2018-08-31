@@ -60,7 +60,7 @@ def flatCardStack(cardStack):
         for e in cardStack[k]: 
             data.append(e)
     return filter(lambda x: not( x.completion)  , data) 
- 
+
 def main(s,num):
     """ main function for parsing json  and extracting information 
         Args: 
